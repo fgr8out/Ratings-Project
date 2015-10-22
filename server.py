@@ -25,6 +25,7 @@ def index():
     return render_template("homepage.html")
 
 
+
 @app.route('/users')
 def user_list():
     """Show list of users."""
@@ -38,6 +39,8 @@ def user_list():
 def show_login():
     """Show login page"""
     return render_template("login.html")
+
+
 
 @app.route('/handle-login', methods=['POST'])
 def handle_login():
@@ -59,6 +62,16 @@ def handle_login():
     else:
         flash("Sorry, this username does not exist!")
         return redirect('/')
+
+
+@app.route('/user_info/<int:user_id>')
+def user_info(user_id):
+    user = User.query.get(user_id)
+    return render_template("user_info.html", user=user)
+
+
+
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
