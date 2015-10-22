@@ -39,6 +39,26 @@ def show_login():
     """Show login page"""
     return render_template("login.html")
 
+@app.route('/handle-login', methods=['POST'])
+def handle_login():
+    """Process login form"""
+
+    username = request.form['username']
+    password = request.form['password']
+
+    user = User.query.filter_by(email = username).first()
+    if user:
+        if user.password == password:
+            session['user'] = username
+            flash("Logged in as %s" % username)
+            return redirect('/')
+        else: 
+            flash("Wrong password!")
+            return redirect('/')
+
+    else:
+        flash("Sorry, this username does not exist!")
+        return redirect('/')
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
