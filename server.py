@@ -54,7 +54,7 @@ def handle_login():
         if user.password == password:
             session['user'] = username
             flash("Logged in as %s" % username)
-            return redirect('/')
+            return redirect('user_info/%s' % user.user_id)
         else: 
             flash("Wrong password!")
             return redirect('/')
